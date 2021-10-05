@@ -1,7 +1,10 @@
 {% extends 'base_generic.html' %}
 
 {% block content %}
-    <h1>Title: {{ book.title }}</h1>
+    <h1>Title: {{ book.title }}{% if perms.catalog.can_mark_returned %}
+        (<a href="{% url 'book-update' book.pk %}">Edit</a>)
+        {% endif %}
+    </h1>
     <p><strong>Author:</strong><a href="{{ book.author.get_absolute_url }}">{{ book.author }}</a></p>
     <p><strong>Summary:</strong>{{ book.summary }}</p>
     <p><strong>ISBN:</strong>{{ book.isbn }}</p>
@@ -15,5 +18,8 @@
     <p><strong>Imprint:</strong>{{ copy.imprint }}</p>
     <p class="text-muted"><strong>Id:</strong>{{ copy.id }}</p>
     {% endfor %}
+    {% if perms.catalog.can_mark_returned %}
+        <a href="{% url 'book-delete' book.pk %}">Delete this Book</a>
+    {% endif %}
     </div>
 {% endblock %}

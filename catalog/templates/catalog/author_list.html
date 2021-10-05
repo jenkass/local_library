@@ -7,6 +7,10 @@
         {% for author in author_list %}
         <li><a href="{{ author.get_absolute_url }}">{{ author.first_name }}, {{ author.last_name }}({{ author.date_of_birth }})</a></li>
         {% endfor %}
+        {% if perms.catalog.can_mark_returned %}
+            <hr>
+            <a href="{% url 'author-create' %}">Create author</a>
+        {% endif %}
     </ul>
     {% else %}
         <p>There are no authors.</p>
